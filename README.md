@@ -217,3 +217,55 @@ db.trips.find({ "tripduration": { "$lte" : 70 },
 
 
 ```
+
+## Logical operator
+
+1. $and -match all the specified query clauses
+2. $or - al least one of the query clauses is matched
+3. $not - negates the query requirement
+4. $nor - fail to match both given clauses
+
+```
+
+- Find all documents where airplanes CR2 or A81 left or landed in the KZN airport:
+db.routes.find({ "$and": [ { "$or" :[ { "dst_airport": "KZN" },
+                                    { "src_airport": "KZN" }
+                                  ] },
+                          { "$or" :[ { "airplane": "CR2" },
+                                     { "airplane": "A81" } ] }
+                         ]}).pretty()
+
+- How many businesses in the sample_training.inspections dataset have the inspection result "Out of Business" and belong to the "Home Improvement Contractor - 100" sector?
+
+db.inspections.find({"result": "Out of Business", "sector": "Home Improvement Contractor - 100"}).count()
+
+- How many zips in the sample_training.zips dataset are neither over-populated nor under-populated?
+
+db.zips.find({"pop": { "$not": { "$gt": 1000000 } },
+              "pop": { "$not": { "$lt": 5000 } }
+             }).count()
+or
+
+db.zips.find({ "pop": { "$gte": 5000, "$lte": 1000000 }}).count()
+
+
+- How many companies in the sample_training.companies dataset were either founded in 2004
+[and] either have the social category_code [or] web category_code,
+[or] were founded in the month of October
+[and] also either have the social category_code [or] web category_code?
+
+db.companies.find({ "$and": [ { "founded_year": 2004 },
+                             { "$or": [ { "category_code": "social" },
+                                        { "category_code": "web" } ] },
+
+                                { "$nor": [ { "category_code": "social" },
+                                            { "category_code": "web" } ] }
+                           ]
+                  }).pretty()
+```
+
+## Expressive $expr operator
+
+```
+
+```
