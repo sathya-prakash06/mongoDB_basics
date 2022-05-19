@@ -20,14 +20,13 @@
 
 - Cluster - group of servers that store your data.
 
-
 ## What is JSON?
 
 JavaScript Object Notation, more commonly known as JSON, was defined as part of the JavaScript language in the early 2000s by JavaScript creator Douglas Crockford, though it wasn’t until 2013 that the format was officially specified.
 
 JavaScript objects are simple associative containers, wherein a string key is mapped to a value (which can be a number, string, function, or even another object). This simple language trait allowed JavaScript objects to be represented remarkably simply in text:
 
-``
+```
 {
   "_id": 1,
   "name" : { "first" : "John", "last" : "Backus" },
@@ -45,7 +44,7 @@ JavaScript objects are simple associative containers, wherein a string key is ma
   ]
 }
 
-``
+```
 
 ## What is BSON?
 
@@ -57,7 +56,7 @@ Languages that support any kind of complex mathematics typically have different 
 
 Not only is it helpful to be able to represent those distinctions in data stored in MongoDB, it also allows for comparisons and calculations to happen directly on data in ways that simplify consuming application code.
 
-``
+```
 {"hello": "world"} →
 \x16\x00\x00\x00           // total document size
 \x02                       // 0x02 = type String
@@ -75,4 +74,4 @@ hello\x00                  // field name
  \x00
  \x00
 
- ``
+```
