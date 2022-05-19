@@ -156,6 +156,7 @@ db.inspections.insert([ { "test": 1 }, { "test": 2 }, { "test": 3 } ])
 
 ## Update
 
+- updateOne(), updateMany()
 ```
 db.zips.updateMany({ "city": "HUDSON" }, { "$inc": { "pop": 10 } })
 
