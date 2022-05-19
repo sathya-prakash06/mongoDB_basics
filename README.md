@@ -173,3 +173,18 @@ db.grades.updateOne({ "student_id": 250, "class_id": 339 },
                      })
 
 ```
+
+## Delete
+
+```
+Delete all the documents that have test field equal to 1.
+db.inspections.deleteMany({ "test": 1 })
+
+Delete one document that has test field equal to 3.
+db.inspections.deleteOne({ "test": 3 })
+
+Drop the inspection collection.
+db.inspection.drop()
+
+
+```
