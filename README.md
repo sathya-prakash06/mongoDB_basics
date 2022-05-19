@@ -156,7 +156,10 @@ db.inspections.insert([ { "test": 1 }, { "test": 2 }, { "test": 3 } ])
 
 ## Update
 
+- update operators : $inc, $set, $unset, $push, $pull, $rename, $bit
+
 - updateOne(), updateMany()
+
 ```
 db.zips.updateMany({ "city": "HUDSON" }, { "$inc": { "pop": 10 } })
 
@@ -185,6 +188,32 @@ db.inspections.deleteOne({ "test": 3 })
 
 Drop the inspection collection.
 db.inspection.drop()
+
+
+```
+
+## Comparision operator
+
+1. $eq - Equal to
+2. $ne - Not equal to
+3. $gt - Greater than
+4. $gte - Greater than or equal to
+5. $lt - Less than
+6. $lte - Less than or equal to
+
+```
+
+Find all documents where the tripduration was less than or equal to 70 seconds and the usertype was not Subscriber:
+db.trips.find({ "tripduration": { "$lte" : 70 },
+                "usertype": { "$ne": "Subscriber" } }).pretty()
+
+Find all documents where the tripduration was less than or equal to 70 seconds and the usertype was Customer using a redundant equality operator:
+db.trips.find({ "tripduration": { "$lte" : 70 },
+                "usertype": { "$eq": "Customer" }}).pretty()
+
+Find all documents where the tripduration was less than or equal to 70 seconds and the usertype was Customer using the implicit equality operator:
+db.trips.find({ "tripduration": { "$lte" : 70 },
+                "usertype": "Customer" }).pretty()
 
 
 ```
