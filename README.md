@@ -279,4 +279,37 @@ db.trips.find({ "$expr": { "$and": [ { "$gt": [ "$tripduration", 1200 ]},
                          { "$eq": [ "$end station id", "$start station id" ]}
                        ]}}).count(
 
+- How many companies in the sample_training.companies collection have the same permalink as their twitter_username?
+db.companies.find({ "$expr": { "$eq": [ "$permalink", "$twitter_username" ]}}).count()
+
 ```
+
+## Array operators
+
+- $push - allow us to add an element to an array
+- $pop - remove an element from an array
+- $unset - remove an element from an array
+- $slice - return a slice of an array
+- $position - return the position of an element in an array
+- $elemMatch - return the first element in an array that matches the specified criteria
+- $size - return the size of an array
+- $all - return true if all elements in the specified array match the specified criteria
+- $in - return true if the specified element is in the specified array
+- $nin - return true if the specified element is not in the specified array
+- $exists - return true if the specified element exists
+- $type - return the type of the specified element
+- $mod - return true if the specified element is a modulus of the specified divisor
+- $regex - return true if the specified element matches the specified regular expression
+- $text - return true if the specified element matches the specified text search query
+- $where - return true if the specified JavaScript expression returns true
+
+```
+
+- What is the name of the listing in the sample_airbnb.listingsAndReviews dataset that accommodates more than 6 people and has exactly 50 reviews?
+db.listingsAndReviews.find({ "$and": [ { "$gt": [ "$accommodates", 6 ]},
+                                      { "$eq": [ "$review_scores_rating", 50 ]}
+                                    ]}).pretty()
+
+```
+
+## Array operations and Projections
