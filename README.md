@@ -346,4 +346,41 @@ db.grades.find({ "class_id": 431 },
 db.grades.find({ "scores": { "$elemMatch": { "type": "extra credit" } }
                }).pretty()
 
+- How many companies in the sample_training.companies collection have offices in the city of Seattle?
+db.companies.find({ "offices": { "$elemMatch": { "city": "Seattle" } }
+                  }).count()
+
 ```
+
+## Querying Arrays and sub-documents
+
+````
+
+use sample_training
+
+db.trips.findOne({ "start station location.type": "Point" })
+
+db.companies.find({ "relationships.0.person.last_name": "Zuckerberg" },
+                  { "name": 1 }).pretty()
+
+db.companies.find({ "relationships.0.person.first_name": "Mark",
+                    "relationships.0.title": { "$regex": "CEO" } },
+                  { "name": 1 }).count()
+
+
+db.companies.find({ "relationships.0.person.first_name": "Mark",
+                    "relationships.0.title": {"$regex": "CEO" } },
+                  { "name": 1 }).pretty()
+
+db.companies.find({ "relationships":
+                      { "$elemMatch": { "is_past": true,
+                                        "person.first_name": "Mark" } } },
+                  { "name": 1 }).pretty()
+
+db.companies.find({ "relationships":
+                      { "$elemMatch": { "is_past": true,
+                                        "person.first_name": "Mark" } } },
+                  { "name": 1 }).count()
+
+
+````
