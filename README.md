@@ -399,6 +399,26 @@ db.inspections.find({ "address.city": "NEW YORK" }).count()
 - In its simplest form, another way to query data in MongoDB
 
 - $group - allows us to group data by a specified field
+- $match - allows us to filter data based on a specified criteria
+- $sort - allows us to sort data based on a specified criteria
+- $skip - allows us to skip a specified number of documents
+- $limit - allows us to limit the number of documents returned
+- $unwind - allows us to unwind an array
+- $project - allows us to project a specified field
+- $sample - allows us to randomly sample a specified number of documents
+- $geoNear - allows us to find the closest documents to a specified point
+- $lookup - allows us to perform a join operation
+- $graphLookup - allows us to perform a join operation
+- $out - allows us to output the results of an aggregation pipeline to a specified collection
+- $merge - allows us to merge the results of two or more aggregation pipelines
+- $redact - allows us to remove data from a document based on a specified criteria
+- $replaceRoot - allows us to replace the root of a document with the result of an aggregation pipeline
+- $unset - allows us to remove a specified field from a document
+- $addFields - allows us to add a specified field to a document
+- $bucket - allows us to group documents into buckets based on a specified criteria
+- $bucketAuto - allows us to group documents into buckets based on a specified criteria
+- $replaceWith - allows us to replace a specified field with the result of an aggregation pipeline
+- $sortByCount - allows us to sort documents based on the number of documents that match a specified criteria.
 
 - Find all documents that have Wifi as one of the amenities. Only include price and address in the resulting cursor.
 
@@ -440,4 +460,20 @@ db.listingsAndReviews.find({ "amenities": "Wifi" },
                                                 "count": { "$sum": 1 } } }
                                 ])
 
+  ```
+
+  ### sort and limit
+
+  ```
+  use sample_training
+
+  db.zips.find().sort({ "pop": 1 }).limit(1)
+
+  db.zips.find({ "pop": 0 }).count()
+
+  db.zips.find().sort({ "pop": -1 }).limit(1)
+
+  db.zips.find().sort({ "pop": -1 }).limit(10)
+
+  db.zips.find().sort({ "pop": 1, "city": -1 })
   ```
