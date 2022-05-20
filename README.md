@@ -350,11 +350,13 @@ db.grades.find({ "scores": { "$elemMatch": { "type": "extra credit" } }
 db.companies.find({ "offices": { "$elemMatch": { "city": "Seattle" } }
                   }).count()
 
+
+
 ```
 
 ## Querying Arrays and sub-documents
 
-````
+```
 
 use sample_training
 
@@ -383,4 +385,59 @@ db.companies.find({ "relationships":
                   { "name": 1 }).count()
 
 
-````
+- How many trips in the sample_training.trips collection started at stations that are to the west of the -74 longitude coordinate?
+db.trips.find({ "start station longitude": { "$lt": -74 }
+               }).count()
+
+- How many inspections from the sample_training.inspections collection were conducted in the city of NEW YORK?
+db.inspections.find({ "address.city": "NEW YORK" }).count()
+
+```
+
+## Aggregation Framework
+
+- In its simplest form, another way to query data in MongoDB
+
+- $group - allows us to group data by a specified field
+
+- Find all documents that have Wifi as one of the amenities. Only include price and address in the resulting cursor.
+
+```
+db.listingsAndReviews.find({ "amenities": "Wifi" },
+                           { "price": 1, "address": 1, "_id": 0 }).pretty()
+```
+
+- Using the aggregation framework find all documents that have Wifi as one of the amenities``\*. Only include price and address in the resulting cursor
+
+  ```
+  db.listingsAndReviews.aggregate([
+                                  { "$match": { "amenities": "Wifi" } },
+                                  { "$project": { "price": 1,
+                                                  "address": 1,
+                                                  "_id": 0 }}]).pretty()
+  ```
+
+- Find one document in the collection and only include the address field in the resulting cursor.
+
+  ```
+  db.listingsAndReviews.findOne({ },{ "address": 1, "_id": 0 })
+  ```
+
+  - Project only the address field value for each document, then group all documents into one document per address.country value.
+
+  ```
+  db.listingsAndReviews.aggregate([ { "$project": { "address": 1, "_id": 0 }},
+                                  { "$group": { "_id": "$address.country" }}])
+
+  ```
+
+  - Project only the address field value for each document, then group all documents into one document per address.country value, and count one for each document in each group.
+
+  ```
+  db.listingsAndReviews.aggregate([
+                                  { "$project": { "address": 1, "_id": 0 }},
+                                  { "$group": { "_id": "$address.country",
+                                                "count": { "$sum": 1 } } }
+                                ])
+
+  ```
