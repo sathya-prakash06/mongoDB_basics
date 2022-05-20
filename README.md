@@ -477,3 +477,42 @@ db.listingsAndReviews.find({ "amenities": "Wifi" },
 
   db.zips.find().sort({ "pop": 1, "city": -1 })
   ```
+
+## Indexes
+
+- In a database - special data structure taht stores a small portion of the collection's data set in an easzy to traverse form.
+
+- Indexes are a way to speed up queries by allowing MongoDB to use a specific query plan for a query.
+
+```
+use sample_training
+
+db.trips.find({ "birth year": 1989 })
+
+db.trips.find({ "start station id": 476 }).sort( { "birth year": 1 } )
+
+db.trips.createIndex({ "birth year": 1 })
+
+db.trips.createIndex({ "start station id": 1, "birth year": 1 })
+
+```
+
+## Data Modeling
+
+- Data modeling - a way to organize fields in a document to support your application performance and querying capabilities.
+- A data model is a way to represent the data in a collection.
+
+## Upserts
+
+- Upserts - a way to update a document if it exists or insert a new document if it does not exist.
+
+```
+
+db.iot.updateOne({ "sensor": r.sensor, "date": r.date,
+                   "valcount": { "$lt": 48 } },
+                         { "$push": { "readings": { "v": r.value, "t": r.time } },
+                        "$inc": { "valcount": 1, "total": r.value } },
+                 { "upsert": true })
+
+
+```
